@@ -1,6 +1,7 @@
 const express = require('express');
 const cheerio = require('cheerio');
 const phin = require('phin');
+const cors = require('cors');
 const fs = require('fs');
 
 
@@ -25,7 +26,7 @@ const parseContent = async (url) => {
 				});
 			});
 		})
-		console.log(content);
+		// console.log(content);
 		return content;
 	} catch (error) {
 		console.log(error)
@@ -35,6 +36,7 @@ const parseContent = async (url) => {
 
 
 const app = express();
+app.use(cors());
 const port = process.env.PORT || 5000;
 
 app.get("/", async (req, res) => {
