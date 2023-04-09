@@ -39,12 +39,35 @@ const parseContent = async (url) => {
 };
 
 
+const parseOptions = async (url) => {
+	const res = await phin(url);
+	try {
+		const options = {};
+		const fullHTML = res.body;
+		const $ = cheerio.load(fullHTML);
+		$('[class="sect nav__anchor"]').each((foo, sect) => {
+			const $$ = cheerio.load($(sect).html());
+			options[$$('.sect__title').text()] = $(sect).prop('data-modifiers');
+		});
+		console.log(options);
+		return options;
+	} catch (error) {
+		console.log(error)
+		return null
+	}
+};
+
+
 const app = express();
 app.use(cors());
 const port = process.env.PORT || 5000;
 
 app.get("/", async (req, res) => {
 	res.send(await parseContent('https://papa-sous.ru'));
+});
+
+app.get("/options", async (req, res) => {
+	res.send(await parseOptions('https://papa-sous.ru'));
 });
 
 app.listen(port, () => {
