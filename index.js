@@ -15,11 +15,15 @@ const parseContent = async (url) => {
 			const $$ = cheerio.load($(sect).html());
 			$$('.ddish--with-photo').each((bar, dish) => {
 				const $$$ = cheerio.load($(dish).html());
+				const badges = [];
+				$$$('.ddish__badge').each((baz, badge) => {
+					badges.push($(badge).text());
+				});
 				content.push({
 					section: $$('.sect__title').text(),
 					name: $$$('.ddish__name').text(),
 					imgSrc: $$$('[class="ddish__photo lazyload"]').prop('data-full'),
-					badge: $$$('.ddish__badge').text(),
+					badges: badges,
 					description: $$$('.ddish__ingredients').text(),
 					price: $$$('.ddish__sum').text().replace(/\s+/g, " ").trim(),
 					size: $$$('.ddish__size').text().replace(/\s+/g, " ").trim(),
