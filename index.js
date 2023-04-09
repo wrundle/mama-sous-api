@@ -19,10 +19,10 @@ const parseContent = async (url) => {
 					section: $$('.sect__title').text(),
 					name: $$$('.ddish__name').text(),
 					imgSrc: $$$('[class="ddish__photo lazyload"]').prop('data-full'),
-					badge: $$$('[class="ddish__badge ddish__badge--hit"]').text(),
+					badge: $$$('.ddish__badge').text(),
 					description: $$$('.ddish__ingredients').text(),
-					price: $$$('.ddish__sum').text().replace(/\s+/g, " "),
-					size: $$$('.ddish__size').text().replace(/\s+/g, " "),
+					price: $$$('.ddish__sum').text().replace(/\s+/g, " ").trim(),
+					size: $$$('.ddish__size').text().replace(/\s+/g, " ").trim(),
 				});
 			});
 		})
